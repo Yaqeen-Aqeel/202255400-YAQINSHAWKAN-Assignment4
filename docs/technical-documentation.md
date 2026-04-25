@@ -1,150 +1,175 @@
 # Technical Documentation
 
+**Project:** Personal Portfolio Web Application – Assignment 4  
+**Student:** Yaqin Aqeel Shawkan | ID: 202255400  
+**Live URL:** https://yaqeen-aqeel.github.io/202255400-YAQINSHAWKAN-Assignment4/
+
+---
+
 ## 1. Project Overview
-This project is a responsive personal portfolio web application built using HTML, 
-CSS, and JavaScript. It represents the starting point of a professional portfolio 
-and demonstrates understanding of front-end development fundamentals, responsive 
-design principles, interactivity, API integration, state management, and performance optimization.
 
-The website contains four primary sections: About Me, Quote of the Day, Projects, and Contact.
+This is a single-page personal portfolio web application built entirely with vanilla HTML, CSS,
+and JavaScript — no frameworks or build tools required. The application is fully responsive and
+deploys as a static site via GitHub Pages.
 
----
-
-## 2. Project Structure
-
-The project follows a clear and organized folder structure:
-
-assignment-3/
-├── index.html              → Main webpage structure  
-├── css/styles.css          → Styling and responsive design  
-├── js/script.js            → JavaScript interactivity  
-├── assets/images/          → Compressed project images  
-├── docs/                   → Documentation files  
-│   ├── ai-usage-report.md  
-│   └── technical-documentation.md  
-└── README.md               → Project overview and setup instructions  
-
-This structure separates content, styling, logic, and documentation to improve 
-maintainability and readability.
+The portfolio is structured as a single scrollable page with clearly defined sections, smooth
+anchor navigation, and multiple interactive features driven by client-side JavaScript.
 
 ---
 
-## 3. Technologies Used
+## 2. File Structure
 
-HTML5 was used to build the structure and semantic layout of the webpage.  
-CSS3 was used for styling, layout design, and responsive behavior.  
-JavaScript (ES6+) was used to implement dynamic interactivity, API calls, 
-state management, and application logic.  
-DummyJSON Quotes API was used to fetch and display random inspirational quotes.
-
----
-
-## 4. Design and Layout Decisions
-
-### Section-Based Layout
-Each major part of the website is wrapped in a `<section>` element 
-to maintain a semantic and organized structure.
-
-### Flexbox Usage
-Flexbox is used for layout alignment and spacing in several areas:
-- Navigation menu alignment
-- Vertical arrangement of project cards
-- Contact form layout
-
-Flexbox allows flexible and consistent alignment across different screen sizes.
-
-### Card Design for Projects
-Projects are displayed inside visually distinct cards with padding, rounded 
-corners, and shadows. Cards use `width: 100%` and `max-width: 700px` to remain 
-responsive across all screen sizes instead of a fixed width.
+```
+202255400-YAQINSHAWKAN-Assignment4/
+├── index.html                  # Main HTML document (single page)
+├── css/
+│   └── styles.css              # All styling — layout, responsiveness, animations
+├── js/
+│   └── script.js               # All JavaScript — features, API calls, DOM manipulation
+├── assets/
+│   └── images/                 # Project screenshots and calligraphy photos
+├── docs/
+│   ├── ai-usage-report.md      # AI tool usage documentation
+│   └── technical-documentation.md  # This file
+├── presentation/
+│   └── demo-video.mp4          # Video presentation
+├── README.md
+└── .gitignore
+```
 
 ---
 
-## 5. Responsive Design Strategy
+## 3. Architecture
 
-Responsive design was implemented using CSS media queries.
+The application follows a straightforward **single-page architecture**:
 
-### Breakpoint
-@media (max-width: 768px)
+- `index.html` defines the structure and all sections
+- `styles.css` handles all visual presentation including responsive breakpoints
+- `script.js` is loaded at the bottom of `<body>` and handles all dynamic behavior
 
-### Mobile and Tablet Adjustments
-- Navigation links stack vertically instead of horizontally
-- Project cards are centered and fill available width on smaller screens
-- Spacing and layout adapt for better readability on mobile devices
-
-These adjustments ensure the site works well on desktops, tablets, and smartphones.
+There is no backend, no build pipeline, and no external JavaScript libraries. All features
+are implemented using standard Web APIs available in modern browsers.
 
 ---
 
-## 6. JavaScript Interactivity
+## 4. Features — Technical Details
 
-### Greeting Message
-The script retrieves the current hour using JavaScript's Date object. Based on the 
-hour, it determines whether it is morning, afternoon, or evening and displays an 
-appropriate greeting with the visitor's saved name.
+### 4.1 Personalized Greeting & Name Modal
 
-### Name Modal & State Management
-A modal prompts the visitor to enter their name on first visit. The name is stored 
-using `localStorage` so it persists across browser sessions. A "Change Name" button 
-allows the user to update their name at any time, and the greeting updates instantly 
-to reflect the change.
+**How it works:**  
+On page load, `script.js` checks `localStorage` for a saved visitor name. If none exists,
+a modal dialog appears prompting the user to enter their name. Once saved, the name is stored
+in `localStorage` and a greeting is displayed in the header, customized by time of day
+(Good Morning / Good Afternoon / Good Evening).
 
-### Inspirational Quotes API
-A random inspirational quote is fetched from the DummyJSON Quotes API 
-(`https://dummyjson.com/quotes/random`) on every page load using JavaScript's 
-`fetch()` and async/await. A "New Quote" button allows the visitor to fetch a 
-new quote at any time. Errors are handled gracefully with a user-friendly message 
-if the API request fails.
+A "Change Name" button allows the user to reopen the modal and update their name at any time.
 
-### Visit Duration Counter
-A live counter tracks and displays how long the visitor has been on the site. 
-It updates every second using `setInterval()` and formats the time into hours, 
-minutes, and seconds, showing only relevant units (e.g. `45s`, `2m 10s`, `1h 3m 5s`).
-
-### Contact Form Validation
-The contact form includes multi-step validation logic:
-- Checks that no field is left empty
-- Validates that the email follows a correct format using a regular expression
-- Highlights invalid fields with a red border and shadow
-- Displays a success or error message with a fade-in/fade-out animation
-- Resets the form on successful submission
+**Key APIs used:** `localStorage.getItem()`, `localStorage.setItem()`, DOM event listeners,
+`new Date().getHours()`
 
 ---
 
-## 7. Performance Optimizations
+### 4.2 Live Visit Duration Timer
 
+**How it works:**  
+When the page loads, a timestamp is recorded. A `setInterval` function runs every second,
+calculates the difference between the current time and the start time, and updates a
+`<span>` element in the header displaying the elapsed time in seconds, minutes, and hours.
 
-- `loading="lazy"` was added to all images so they only load when scrolled into view
-- JavaScript and CSS are kept clean with no unused code or repeated logic
-- The site was tested using Google Lighthouse to measure and verify performance
-
----
-
-## 8. Accessibility and Usability Considerations
-
-- Semantic HTML elements such as `header`, `section`, and `footer` improve structure and accessibility
-- Form fields include associated labels for better usability
-- Buttons and links include hover effects for user feedback
-- Readable font sizes and consistent spacing improve overall user experience
-- User-friendly error messages are shown if the API fails or form validation fails
+**Key APIs used:** `Date.now()`, `setInterval()`
 
 ---
 
-## 9. Testing and Validation
+### 4.3 Inspirational Quotes (External API)
 
-The website was tested by:
-- Opening it in modern browsers such as Chrome and Edge
-- Resizing the browser window to confirm responsive behavior across screen sizes
-- Verifying the greeting message updates correctly depending on the time of day
-- Testing the name modal, localStorage persistence, and "Change Name" button
-- Confirming the quotes API fetches and displays correctly with the "New Quote" button
-- Verifying the visit duration counter increments correctly every second
-- Submitting the contact form with valid and invalid inputs to test all validation rules
-- Running a Lighthouse audit to check performance scores
+**How it works:**  
+On page load and when the "New Quote" button is clicked, a `fetch()` request is sent to the
+DummyJSON Quotes API (`https://dummyjson.com/quotes/random`). The response is parsed as JSON
+and the quote text and author are injected into the DOM.
 
-No console errors were found during testing.
+Error handling is implemented with a `try/catch` block — if the API call fails, a user-friendly
+fallback message is displayed instead of leaving the section blank or crashing.
+
+**Key APIs used:** `fetch()`, `async/await`, `try/catch`, `response.json()`
 
 ---
 
-This documentation explains the technical structure, design decisions, and 
-functionality of the portfolio project.
+### 4.4 Contact Form Validation
+
+**How it works:**  
+The contact form has three fields: Name, Email, and Message. On submission, a JavaScript
+handler prevents the default browser behavior and validates each field:
+
+- Checks that no field is empty
+- Validates email format using a regular expression
+- Highlights invalid fields with a red border and displays specific error messages
+- On successful validation, shows a success confirmation message
+
+**Key APIs used:** `event.preventDefault()`, `RegExp`, DOM classList manipulation
+
+---
+
+### 4.5 Calligraphy Gallery & Lightbox
+
+**How it works:**  
+The gallery uses a CSS Grid layout with `auto-fill` and `minmax(220px, 1fr)` to create a
+fully responsive grid that adjusts column count automatically based on the available screen width —
+no media queries needed for the grid itself.
+
+Each image has a hover effect (scale + box-shadow) applied via CSS transitions.
+
+When a gallery image is clicked, a JavaScript event listener captures the image's `src` and `alt`
+attributes and injects them into a fullscreen lightbox overlay. The lightbox is shown by adding
+an `active` CSS class that changes `display` from `none` to `flex`. It can be dismissed by
+clicking the × button or clicking anywhere outside the image.
+
+**Key APIs used:** `querySelectorAll()`, `forEach()`, `classList.add/remove()`, CSS transitions
+
+---
+
+### 4.6 Lazy Loading
+
+All images in the portfolio (project screenshots and calligraphy photos) use the native
+HTML `loading="lazy"` attribute. This tells the browser to defer loading off-screen images
+until the user scrolls near them, improving initial page load performance without any
+JavaScript required.
+
+---
+
+## 5. Responsive Design
+
+The layout is built mobile-first using CSS Flexbox and Grid:
+
+- The navigation collapses gracefully on smaller screens
+- Project cards and the gallery grid reflow automatically using `auto-fill` / `minmax`
+- Font sizes and spacing are set in relative units (`rem`, `%`) for consistent scaling
+- Tested on Chrome, Firefox, and mobile viewports using browser DevTools
+
+---
+
+## 6. Performance Considerations
+
+- All images use `loading="lazy"` to reduce initial load time
+- No external JavaScript libraries are used — zero dependency overhead
+- CSS and JS files are kept lean with no unused rules or dead code
+- Images are stored locally in `assets/images/` to avoid third-party loading delays
+
+---
+
+## 7. Known Limitations
+
+- The contact form does not actually send an email — it only performs client-side validation.
+  A backend or service like EmailJS would be needed for real form submission.
+- The DummyJSON Quotes API is a free public API with no guaranteed uptime. If it goes down,
+  the fallback error message is displayed.
+- The site is a static deployment and has no server-side functionality.
+
+---
+
+## 8. Future Improvements
+
+- Integrate EmailJS or Formspree to make the contact form fully functional
+- Add a dark/light mode toggle with the preference saved in `localStorage`
+- Add smooth scroll animations using the `IntersectionObserver` API
+- Expand the calligraphy gallery with captions and category filtering
+- Add a downloadable CV/resume button in the About section
